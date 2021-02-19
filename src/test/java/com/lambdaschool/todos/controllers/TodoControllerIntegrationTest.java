@@ -1,10 +1,9 @@
 package com.lambdaschool.todos.controllers;
 
-import com.lambdaschool.todos.TodosApplication;
 import com.lambdaschool.todos.TodosApplicationTests;
-import com.lambdaschool.todos.models.Todos;
+import com.lambdaschool.todos.models.Todo;
 import com.lambdaschool.todos.models.User;
-import com.lambdaschool.todos.services.TodosService;
+import com.lambdaschool.todos.services.TodoService;
 import com.lambdaschool.todos.services.UserService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.After;
@@ -24,12 +23,11 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+@RunWith (SpringRunner.class)
+@SpringBootTest (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     classes = TodosApplicationTests.class)
 @AutoConfigureMockMvc
-public class TodosControllerIntegrationTest
-{
+public class TodoControllerIntegrationTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -39,7 +37,7 @@ public class TodosControllerIntegrationTest
     UserService userService;
 
     @Autowired
-    TodosService todosService;
+    TodoService todosService;
 
     @Before
     public void setUp() throws Exception
@@ -62,9 +60,7 @@ public class TodosControllerIntegrationTest
         User newUser = new User("testUser",
             "testpassword",
             "test@email.com");
-        newUser.getTodos()
-            .add(new Todos(newUser,
-                "testTodo"));
+        newUser.getTodos().add(new Todo(newUser, "testTodo"));
         newUser = userService.save(newUser);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/todos/todo/{todoid}",

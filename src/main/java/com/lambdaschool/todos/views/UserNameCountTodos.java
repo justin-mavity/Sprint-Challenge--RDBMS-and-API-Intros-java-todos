@@ -1,5 +1,9 @@
 package com.lambdaschool.todos.views;
 
-public interface UserNameCountTodos
-{
+public interface UserNameCountTodos {
+    long getTodoid();
+
+    String getDescription();
+
+    int getCountusers();
 }

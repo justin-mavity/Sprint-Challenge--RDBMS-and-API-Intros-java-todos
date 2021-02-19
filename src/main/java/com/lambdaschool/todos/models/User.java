@@ -1,9 +1,12 @@
 package com.lambdaschool.todos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The entity allowing interaction with the users table
@@ -36,10 +39,18 @@ public class User extends Auditable
     /**
      * Primary email account of user. Could be used as the userid. Cannot be null and must be unique.
      */
-    @Column(nullable = false,
+    @Column (nullable = false,
         unique = true)
     @Email
     private String primaryemail;
+
+
+    @OneToMany (mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties (value = "user",
+        allowSetters = true)
+    private List<Todos> todos = new ArrayList<>();
 
     /**
      * Default constructor used primarily by the JPA.
@@ -57,10 +68,7 @@ public class User extends Auditable
      * @param password     The password (String) of the user
      * @param primaryemail The primary email (String) of the user
      */
-    public User(
-        String username,
-        String password,
-        String primaryemail)
+    public User(String username, String password, String primaryemail)
     {
         setUsername(username);
         setPassword(password);
@@ -97,8 +105,7 @@ public class User extends Auditable
         if (username == null) // this is possible when updating a user
         {
             return null;
-        } else
-        {
+        } else {
             return username.toLowerCase();
         }
     }
@@ -123,8 +130,7 @@ public class User extends Auditable
         if (primaryemail == null) // this is possible when updating a user
         {
             return null;
-        } else
-        {
+        } else {
             return primaryemail.toLowerCase();
         }
     }
@@ -157,5 +163,13 @@ public class User extends Auditable
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public List<Todos> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todos> usertodos) {
+        this.todos = usertodos;
     }
 }

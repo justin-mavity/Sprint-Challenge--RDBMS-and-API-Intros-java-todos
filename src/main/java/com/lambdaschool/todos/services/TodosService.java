@@ -7,4 +7,6 @@ public interface TodosService {
 
     Todos findTodoById(long id);
 
+    Todos save(Todos todos);
+
 }

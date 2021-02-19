@@ -32,4 +32,13 @@ public class TodosServiceImpl implements TodosService {
             throw new EntityNotFoundException("Todo is " + todoid + ("Not found to show completed task."));
         }
     }
+
+    @Transactional
+    @Override
+    public Todos save(Todos todos) {
+        Todos newTodo = new Todos();
+
+        newTodo.setDescription(todos.getDescription());
+        return todosrepository.save(newTodo);
+    }
 }

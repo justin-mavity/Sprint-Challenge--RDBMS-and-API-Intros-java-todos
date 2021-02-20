@@ -39,6 +39,8 @@ public class TodosServiceImpl implements TodosService {
         Todos newTodo = new Todos();
 
         newTodo.setDescription(todos.getDescription());
+        newTodo.setUser(todos.getUser());
+
         return todosrepository.save(newTodo);
     }
 }
